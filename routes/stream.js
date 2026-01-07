@@ -69,4 +69,38 @@ router.get('/', (req, res) => {
   });
 });
 
+// NON-STREAMING VERSION FOR COMPARISON
+// This shows what happens without streaming
+router.get('/no-stream', (req, res) => {
+  const totalItems = parseInt(req.query.totalItems) || 1000;
+  
+  console.log(`[NO-STREAM] Generating ${totalItems} items...`);
+  const startTime = Date.now();
+  
+  // Generate ALL data in memory first
+  const data = generateLargeArray(totalItems);
+  const generateTime = Date.now() - startTime;
+  console.log(`[NO-STREAM] Generated in ${generateTime}ms`);
+  
+  // Stringify entire array (huge memory allocation)
+  const stringifyStart = Date.now();
+  const jsonString = JSON.stringify(data);
+  const stringifyTime = Date.now() - stringifyStart;
+  console.log(`[NO-STREAM] Stringified in ${stringifyTime}ms`);
+  
+  // Send everything at once
+  const totalTime = Date.now() - startTime;
+  console.log(`[NO-STREAM] Total time before sending: ${totalTime}ms`);
+  console.log(`[NO-STREAM] Memory: ~${(jsonString.length / 1024).toFixed(2)} KB`);
+  
+  res.json({
+    message: 'Non-streaming response',
+    totalItems: data.length,
+    timeToGenerate: `${generateTime}ms`,
+    timeToStringify: `${stringifyTime}ms`,
+    totalTimeBeforeSend: `${totalTime}ms`,
+    data: data
+  });
+});
+
 export default router;
