@@ -1,0 +1,27 @@
+{
+  "name": "backflow",
+  "version": "1.0.0",
+  "description": "Production-style Express.js app demonstrating core backend concepts",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "express",
+    "streaming",
+    "sse",
+    "jwt",
+    "worker-threads",
+    "child-process"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "dotenv": "^16.3.1",
+    "uuid": "^9.0.1"
+  }
+}
